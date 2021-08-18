@@ -1,6 +1,7 @@
 import psycopg2
-import csv
 from os import listdir
+import json
+import datetime
 
 files = [x.replace('.csv', '') for x in listdir('yahoo_data')]
 
@@ -25,13 +26,14 @@ def insert_data_to_db():
 			next(f)  # Skip the header row.
 			# f , <database name>, Comma-Seperated
 			cur.copy_from(f, f'{file.lower()}', sep=',')
-			# Commit Changes
+			# Add new column as PK with name ID
+			cur.execute(f'ALTER TABLE {file.lower()} ADD COLUMN ID SERIAL PRIMARY KEY;')
 			conn.commit()
-			# Close connection
+	# Close connection
 	conn.close()
 
 
 if __name__ == '__main__':
 	# rename_headers()
-	# insert_data_to_db()
+	insert_data_to_db()
 	pass
