@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, make_response
 import component
 
+
 app = Flask(__name__)
 
 
