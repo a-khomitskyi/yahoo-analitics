@@ -3,6 +3,7 @@ import component
 
 app = Flask(__name__)
 
+
 def get_content_from_table(name):
 	"""
 	:param name: Must be name of existing table in our DB
@@ -20,8 +21,8 @@ def get_content_from_table(name):
 
 
 # Forming json response with all the data from DB (list(dict<table_name: table_data>))
-@app.route('/api', methods=['GET'])
-def json_responce_all_data():
+@app.route('/api/', methods=['GET'])
+def json_response_all_data():
 	content = []
 	for i in component.FILES:
 		name = i
@@ -32,8 +33,8 @@ def json_responce_all_data():
 
 
 # Forming json response with all the data from table (list(dict<column_name: column_data>))
-@app.route('/api/<string:comp>', methods=['GET'])
-def current_json_responce(comp):
+@app.route('/api/<string:comp>/', methods=['GET'])
+def current_json_response(comp):
 	# route exist
 	if comp.upper() in component.FILES:
 		return jsonify(get_content_from_table(comp))

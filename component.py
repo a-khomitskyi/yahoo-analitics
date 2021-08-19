@@ -21,20 +21,19 @@ def rename_headers():
 
 
 def db_connect():
+	"""Function connect to DB"""
 	return psycopg2.connect(f'host={host} dbname={dbname} user={user} password={password}')
 
 
 def insert_data_to_db():
-	"""
-	Method to add data from existing *.csv files to the database tables
-	"""
+	"""	Method to add data from existing *.csv files to the database tables	"""
 	conn = db_connect()
 	cur = conn.cursor()
 
 	for file in FILES:
 		cur.execute(f'SELECT 1 from {file.lower()}')
 		if cur.fetchone() is None:
-			with open(f'/home/mizzantrop/Desktop/yahoo_data/{file}.csv', 'r') as f:
+			with open(f'/yahoo_data/{file}.csv', 'r') as f:
 				next(f)  # Skip the header row.
 				# f , <database name>, Comma-Seperated
 				cur.copy_from(f, f'{file.lower()}', sep=',')
