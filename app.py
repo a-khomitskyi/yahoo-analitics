@@ -1,7 +1,5 @@
 from flask import Flask, jsonify, make_response
-import psycopg2
 import component
-from config import *
 
 app = Flask(__name__)
 
@@ -48,6 +46,6 @@ if __name__ == '__main__':
 	try:
 		component.rename_headers()
 		component.insert_data_to_db()
-		app.run(debug=True)
+		app.run(debug=False)
 	except Exception as ex:
 		print(Exception)
